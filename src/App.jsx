@@ -11,6 +11,9 @@ class App extends Component {
     return (
       <div className="App">
         <button onClick={ () => this.roll20() }>roll a 20</button>
+        <button onClick={ () => this.roll20() }>roll a 20</button>
+        <button onClick={ () => this.roll20() }>roll a 20</button>
+        <button onClick={ () => this.roll20() }>roll a 20</button>
       </div>
     );
   }
