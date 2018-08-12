@@ -1,7 +1,7 @@
 {
-  "name": "dice-roller",
+  "name": "all-you-need-is-dice",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
