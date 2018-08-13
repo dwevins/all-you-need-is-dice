@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ResultsPanel from './ResultsPanel';
+import DicePanel from './DicePanel';
 import './App.css';
 
 class App extends Component {
@@ -38,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button onClick={ () => this.roll({20: 5}) }>roll a 20</button>
+        <DicePanel roll={(rollData) => this.roll(rollData)}/>
         <ResultsPanel result={this.state.currentResult}/>
       </div>
     );
