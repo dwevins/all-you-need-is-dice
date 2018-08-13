@@ -11,15 +11,34 @@ class App extends Component {
     }
   }
 
-  roll20() {
-    const roll = Math.ceil((Math.random() * 100) / 5);
-    this.setState({currentResult: roll});
+  roll(rollData) {
+    const keys = Object.keys(rollData);
+    let total = 0;
+
+    for (let i = 0; i < keys.length; i++) {
+      const curDie = keys[i];
+      const numRolls = rollData[curDie];
+      const mod = Math.floor(100 / curDie);
+      console.log('curTotal', total);
+      console.log('curDie', curDie);
+      console.log('numRolls', numRolls);
+      console.log('mod', mod);
+
+      for (let j = 1; j <= numRolls; j++) {
+        let roll = Math.ceil((Math.random() * 100) / mod);
+        total += roll;
+        console.log('roll', roll);
+        console.log('new total', total);
+
+      }
+    }
+    this.setState({currentResult: total});
   }
 
   render() {
     return (
       <div className="App">
-        <button onClick={ () => this.roll20() }>roll a 20</button>
+        <button onClick={ () => this.roll({20: 5}) }>roll a 20</button>
         <ResultsPanel result={this.state.currentResult}/>
       </div>
     );
