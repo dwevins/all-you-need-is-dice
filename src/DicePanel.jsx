@@ -6,8 +6,12 @@ export default class DicePanel extends React.Component {
         super(props);
         this.state = {
             rollData: {
+                2: 0,
+                3: 0,
+                4: 0,
+                8: 0,
+                10: 0,
                 20: 0,
-                10: 0
             }
         }
     }
@@ -18,11 +22,18 @@ export default class DicePanel extends React.Component {
         this.setState({rollData: rollDataCopy});
     }
 
-    renderDie(die) {
+    dropDie(die) {
+        const rollDataCopy = this.state.rollData;
+        rollDataCopy[die] = rollDataCopy[die] > 0 ? rollDataCopy[die] - 1 : 0;
+        this.setState({rollData: rollDataCopy});
+    }
+
+    renderDie(die, key) {
         return (
-            <div className="button-container">
+            <div className="die-container" key={key}>
                 <button onClick={ () => this.addDie(die) }>Add a D{ die }</button>
-                <p className="count">{this.state.rollData[die]}</p>
+                <button onClick={ () => this.dropDie(die) }>Drop a D{ die }</button>
+                <p className="count">D{ die } x {this.state.rollData[die]}</p>
             </div>
         )
     }
@@ -30,7 +41,7 @@ export default class DicePanel extends React.Component {
     render() {
         return (
             <section id="dice-panel">
-                {Object.keys(this.state.rollData).map((die) => this.renderDie(die))}
+                {Object.keys(this.state.rollData).map((die, key) => this.renderDie(die, key))}
                 <button onClick={ () => this.props.roll(this.state.rollData) }>Roll!</button>
             </section>
         )
