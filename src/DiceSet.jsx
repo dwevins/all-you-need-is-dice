@@ -64,6 +64,7 @@ export default class DicePanel extends React.Component {
                 <div className="controls">
                     {Object.keys(this.state.rollData).map((die, key) => this.renderDie(die, key))}
                     <button onClick={ () => this.roll(this.state.rollData) }>Roll!</button>
+                    <button onClick={ () => this.props.drop() }>drop set</button>
                 </div>
                 <section id="results">
                     <h1>{ this.state.currentResult }</h1>
