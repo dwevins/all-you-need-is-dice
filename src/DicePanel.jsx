@@ -1,4 +1,5 @@
 import React from 'react';
+import { Object } from 'core-js';
 
 export default class DicePanel extends React.Component {
     constructor(props) {
@@ -17,11 +18,19 @@ export default class DicePanel extends React.Component {
         this.setState({rollData: rollDataCopy});
     }
 
+    renderDie(die) {
+        return (
+            <div className="button-container">
+                <button onClick={ () => this.addDie(die) }>Add a D{ die }</button>
+                <p className="count">{this.state.rollData[die]}</p>
+            </div>
+        )
+    }
+
     render() {
         return (
             <section id="dice-panel">
-                <button onClick={ () => this.addDie(20) }>Add a D20</button>
-                <p className="count">{this.state.rollData[20]}</p>
+                {Object.keys(this.state.rollData).map((die) => this.renderDie(die))}
                 <button onClick={ () => this.props.roll(this.state.rollData) }>Roll!</button>
             </section>
         )

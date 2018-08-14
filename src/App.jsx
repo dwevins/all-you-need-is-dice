@@ -20,17 +20,10 @@ class App extends Component {
       const curDie = keys[i];
       const numRolls = rollData[curDie];
       const mod = Math.floor(100 / curDie);
-      console.log('curTotal', total);
-      console.log('curDie', curDie);
-      console.log('numRolls', numRolls);
-      console.log('mod', mod);
 
       for (let j = 1; j <= numRolls; j++) {
         let roll = Math.ceil((Math.random() * 100) / mod);
         total += roll;
-        console.log('roll', roll);
-        console.log('new total', total);
-
       }
     }
     this.setState({currentResult: total});
