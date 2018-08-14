@@ -57,7 +57,6 @@ export default class DicePanel extends React.Component {
         this.setState({currentResult: total});
       }
 
-
     render() {
         return (
             <div className="dice-set">
@@ -72,5 +71,4 @@ export default class DicePanel extends React.Component {
             </div>
         )
     }
-
 }
