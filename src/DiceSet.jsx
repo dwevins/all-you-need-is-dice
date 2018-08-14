@@ -1,5 +1,4 @@
 import React from 'react';
-import { Object } from 'core-js';
 
 export default class DicePanel extends React.Component {
     constructor(props) {
@@ -14,7 +13,8 @@ export default class DicePanel extends React.Component {
                 10: 0,
                 12: 0,
                 20: 0,
-            }
+            },
+            currentResult: 0
         }
     }
 
@@ -40,14 +40,35 @@ export default class DicePanel extends React.Component {
         )
     }
 
+    roll(rollData) {
+        const keys = Object.keys(rollData);
+        let total = 0;
+
+        for (let i = 0; i < keys.length; i++) {
+          const curDie = keys[i];
+          const numRolls = rollData[curDie];
+          const mod = Math.floor(100 / curDie);
+
+          for (let j = 1; j <= numRolls; j++) {
+            let roll = Math.ceil((Math.random() * 100) / mod);
+            total += roll;
+          }
+        }
+        this.setState({currentResult: total});
+      }
+
+
     render() {
         return (
-            <section id="dice-panel">
-                <div className="dice-controls">
+            <div className="dice-set">
+                <div className="controls">
                     {Object.keys(this.state.rollData).map((die, key) => this.renderDie(die, key))}
+                    <button onClick={ () => this.roll(this.state.rollData) }>Roll!</button>
                 </div>
-                <button onClick={ () => this.props.roll(this.state.rollData) }>Roll!</button>
-            </section>
+                <section id="results">
+                    <h1>{ this.state.currentResult }</h1>
+                </section>
+            </div>
         )
     }
 
