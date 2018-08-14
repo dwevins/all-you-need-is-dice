@@ -9,8 +9,10 @@ export default class DicePanel extends React.Component {
                 2: 0,
                 3: 0,
                 4: 0,
+                6: 0,
                 8: 0,
                 10: 0,
+                12: 0,
                 20: 0,
             }
         }
