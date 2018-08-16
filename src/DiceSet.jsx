@@ -33,9 +33,9 @@ export default class DicePanel extends React.Component {
     renderDie(die, key) {
         return (
             <div className="die-container" key={key}>
-                <button onClick={ () => this.addDie(die) }>Add a D{ die }</button>
-                <button onClick={ () => this.dropDie(die) }>Drop a D{ die }</button>
-                <p className="count">D{ die } x {this.state.rollData[die]}</p>
+                <button onClick={ () => this.addDie(die) }>Add</button>
+                <button onClick={ () => this.dropDie(die) }>Drop</button>
+                <p className="count">d{ die } x {this.state.rollData[die]}</p>
             </div>
         )
     }
@@ -61,12 +61,14 @@ export default class DicePanel extends React.Component {
         return (
             <div className="dice-set">
                 <div className="controls">
-                    {Object.keys(this.state.rollData).map((die, key) => this.renderDie(die, key))}
-                    <button onClick={ () => this.roll(this.state.rollData) }>Roll!</button>
-                    <button onClick={ () => this.props.drop() }>drop set</button>
+                    <div className="dice-menu">
+                        {Object.keys(this.state.rollData).map((die, key) => this.renderDie(die, key))}
+                    </div>
+                    <button onClick={ () => this.roll(this.state.rollData) }>Roll</button>
+                    <button onClick={ () => this.props.drop() }>Drop Set</button>
                 </div>
-                <section id="results">
-                    <h1>{ this.state.currentResult }</h1>
+                <section className="results">
+                    <h3 className="result">{ this.state.currentResult }</h3>
                 </section>
             </div>
         )

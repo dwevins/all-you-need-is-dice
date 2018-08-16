@@ -35,12 +35,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <button onClick={ () => this.addSet() }>add a set</button>
-      <div className="sets-container">
-        { this.state.diceSets.map((set) =>
-          <DiceSet key={ set.key } drop={() => this.dropSet(set.key)}/>
-        )}
-      </div>
+        <header>
+          <div className="content-container">
+            <button onClick={ () => this.addSet() }>Add a Set</button>
+          </div>
+        </header>
+        <div className="sets-container content-container">
+          { this.state.diceSets.map((set) =>
+            <DiceSet key={ set.key } drop={() => this.dropSet(set.key)}/>
+          )}
+        </div>
       </div>
     );
   }
