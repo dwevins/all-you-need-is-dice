@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import ResultsPanel from './ResultsPanel';
-import DicePanel from './DicePanel';
+import DiceSet from './DiceSet';
 import './App.css';
 
 class App extends Component {
@@ -8,32 +7,44 @@ class App extends Component {
     super(props);
 
     this.state = {
-      currentResult: 0
+      diceSets: [
+        {key: 1}
+      ]
     }
   }
 
-  roll(rollData) {
-    const keys = Object.keys(rollData);
-    let total = 0;
+  addSet() {
+    const setsCopy = this.state.diceSets.slice();
+    const numSets = setsCopy.length;
+    const newKey = setsCopy[numSets - 1].key + 1
+    setsCopy.push({key: newKey})
+    this.setState({diceSets: setsCopy});
+  }
 
-    for (let i = 0; i < keys.length; i++) {
-      const curDie = keys[i];
-      const numRolls = rollData[curDie];
-      const mod = Math.floor(100 / curDie);
+  dropSet(key) {
+    if (this.state.diceSets.length === 1) return false;
 
-      for (let j = 1; j <= numRolls; j++) {
-        let roll = Math.ceil((Math.random() * 100) / mod);
-        total += roll;
-      }
+    const setsCopy = this.state.diceSets.slice();
+    const targetSet = setsCopy.filter((set) => set.key === key)[0];
+    if (targetSet) {
+      setsCopy.splice(setsCopy.indexOf(targetSet), 1);
+      this.setState({diceSets: setsCopy});
     }
-    this.setState({currentResult: total});
   }
 
   render() {
     return (
       <div className="App">
-        <DicePanel roll={(rollData) => this.roll(rollData)}/>
-        <ResultsPanel result={this.state.currentResult}/>
+        <header>
+          <div className="content-container">
+            <button onClick={ () => this.addSet() }>Add a Set</button>
+          </div>
+        </header>
+        <div className="sets-container content-container">
+          { this.state.diceSets.map((set) =>
+            <DiceSet key={ set.key } drop={() => this.dropSet(set.key)}/>
+          )}
+        </div>
       </div>
     );
   }
