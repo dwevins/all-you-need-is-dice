@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function DicePanel(props) {
-    console.log(props);
     return (
         <div className="dice-set">
             <div className="controls">

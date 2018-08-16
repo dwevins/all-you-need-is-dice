@@ -45,6 +45,8 @@ class App extends Component {
   }
 
   getSet(sets, key) {
+    console.log(sets);
+
     const targetSet = sets.filter((set) => set.key === key)
     return targetSet.length ? targetSet[0] : null;
   }
@@ -70,16 +72,16 @@ class App extends Component {
 
       newSet.key = targetSet.key;
       newSet.rollData = targetSet.rollData;
-      newSet.total = total;
+      newSet.currentResult = total;
     }
 
-    setsCopy.splice(setsCopy.indexOf(targetSet), 0, newSet);
+    setsCopy.splice(setsCopy.indexOf(targetSet), 1, newSet);
     this.setState({diceSets: setsCopy});
   }
 
   addDie(key, die) {
     const setsCopy = this.state.diceSets.slice();
-    const targetSet = this.getSet(key);
+    const targetSet = this.getSet(setsCopy, key);
     if (targetSet) {
       setsCopy[setsCopy.indexOf(targetSet)].rollData[die] += 1;
       this.setState({diceSets: setsCopy});
@@ -88,7 +90,7 @@ class App extends Component {
 
   dropDie(key, die) {
       const setsCopy = this.state.diceSets.slice();
-      const targetSet = this.getSet(key);
+      const targetSet = this.getSet(setsCopy, key);
       if (targetSet) {
         const rollData = setsCopy[setsCopy.indexOf(targetSet)].rollData;
         setsCopy[setsCopy.indexOf(targetSet)].rollData[die] = rollData[die] > 0 ? rollData[die] - 1 : 0;
@@ -112,7 +114,8 @@ class App extends Component {
           { this.state.diceSets.map((set) =>
             <DiceSet
               key={ set.key }
-              rollData = { set.rollData }
+              rollData={ set.rollData }
+              result={ set.currentResult }
               drop={ () => this.dropSet(set.key) }
               roll={ () => this.roll(set.key) }
               addDie={ (die) => this.addDie(set.key, die) }
