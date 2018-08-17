@@ -11,8 +11,7 @@ class App extends Component {
     }
   }
 
-  addSet() {
-    const setsCopy = this.state.diceSets.slice();
+  createSet(rollSeed= {}) {
     const newSet = {
       rollData: {
         2: 0,
@@ -24,10 +23,20 @@ class App extends Component {
         12: 0,
         20: 0,
       },
+
       currentResult: 0
     }
 
-    setsCopy.push(newSet)
+    Object.keys(rollSeed).map((die) => {
+      newSet.rollData[die] = rollSeed[die];
+    })
+
+    return newSet;
+  }
+
+  addEmptySet() {
+    const setsCopy = this.state.diceSets.slice();
+    setsCopy.push(this.createSet())
     this.setState({diceSets: setsCopy});
   }
 
@@ -106,7 +115,7 @@ class App extends Component {
   generateSave(sets) {
     const rollData = sets.map((set) => set.rollData);
     let shouldUpdateQuery = false;
-    let queryString = '?sets';
+    let queryString = '?sets=';
 
     rollData.map((set, index) => {
       let setDataString = ''
@@ -130,8 +139,37 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
-    this.addSet();
+  componentWillMount() {
+    const search = window.location.search.split('?sets=');
+
+    if (search.length > 1) {
+      const sets = search[1].split('s');
+      const setData = sets.map((set) => {
+        if (set.length % 2 !== 0) return null;
+
+        const dice = [];
+        const values = [];
+        const setData = {};
+
+        for (let i = 0; i < set.length; i+= 4) {
+          dice.push(set.slice(i, i + 2));
+        }
+
+        for (let i = 2; i < set.length; i+= 4) {
+          values.push(set.slice(i, i + 2));
+        }
+
+        dice.map((die, index) => {
+          setData[`${parseInt(die, 16)}`] = parseInt(values[index], 16);
+        })
+
+        return this.createSet(setData);
+      })
+
+      this.setState({diceSets: setData})
+    } else {
+      this.addEmptySet();
+    }
   }
 
   render() {
@@ -141,7 +179,7 @@ class App extends Component {
       <div className="App">
         <header>
           <div className="content-container">
-            <button onClick={ () => this.addSet() }>Add a Set</button>
+            <button onClick={ () => this.addEmptySet() }>Add a Set</button>
             <button onClick={ () => this.rollAll(this.state.diceSets) }>Roll All</button>
           </div>
         </header>
