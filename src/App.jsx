@@ -13,10 +13,7 @@ class App extends Component {
 
   addSet() {
     const setsCopy = this.state.diceSets.slice();
-    const numSets = setsCopy.length;
-    const newKey = numSets > 0 ? this.state.diceSets[numSets - 1].key + 1 : 1;
     const newSet = {
-      key: newKey,
       rollData: {
         2: 0,
         3: 0,
@@ -29,6 +26,7 @@ class App extends Component {
       },
       currentResult: 0
     }
+
     setsCopy.push(newSet)
     this.setState({diceSets: setsCopy});
   }
@@ -37,51 +35,57 @@ class App extends Component {
     if (this.state.diceSets.length === 1) return false;
 
     const setsCopy = this.state.diceSets.slice();
-    const targetSet = this.getSet(setsCopy, key);
+    const targetSet = setsCopy[key];
     if (targetSet) {
       setsCopy.splice(setsCopy.indexOf(targetSet), 1);
       this.setState({diceSets: setsCopy});
     }
   }
 
-  getSet(sets, key) {
-    console.log(sets);
+  rollSet(set) {
+    const setCopy = {};
+    const keys = Object.keys(set.rollData);
+    let total = 0;
 
-    const targetSet = sets.filter((set) => set.key === key)
-    return targetSet.length ? targetSet[0] : null;
+    for (let i = 0; i < keys.length; i++) {
+      const curDie = keys[i];
+      const numRolls = set.rollData[curDie];
+      const mod = Math.floor(100 / curDie);
+
+      for (let j = 1; j <= numRolls; j++) {
+        let roll = Math.ceil((Math.random() * 100) / mod);
+        total += roll;
+      }
+    }
+
+    setCopy.rollData = set.rollData;
+    setCopy.currentResult = total;
+
+    return setCopy;
   }
 
   roll(key) {
     const setsCopy = this.state.diceSets.slice();
-    const targetSet = this.getSet(setsCopy, key);
-    const newSet = {};
-    if (targetSet) {
-      let total = 0;
-      const keys = Object.keys(targetSet.rollData);
-
-      for (let i = 0; i < keys.length; i++) {
-        const curDie = keys[i];
-        const numRolls = targetSet.rollData[curDie];
-        const mod = Math.floor(100 / curDie);
-
-        for (let j = 1; j <= numRolls; j++) {
-          let roll = Math.ceil((Math.random() * 100) / mod);
-          total += roll;
-        }
-      }
-
-      newSet.key = targetSet.key;
-      newSet.rollData = targetSet.rollData;
-      newSet.currentResult = total;
-    }
+    const targetSet = setsCopy[key];
+    const newSet = this.rollSet(targetSet);
 
     setsCopy.splice(setsCopy.indexOf(targetSet), 1, newSet);
     this.setState({diceSets: setsCopy});
   }
 
+  rollAll(sets) {
+    let setsCopy = sets.slice();
+    for (let i = 0; i < sets.length; i++) {
+      setsCopy[i] = this.rollSet(sets[i]);
+    }
+
+    this.setState({diceSets: setsCopy});
+  }
+
   addDie(key, die) {
     const setsCopy = this.state.diceSets.slice();
-    const targetSet = this.getSet(setsCopy, key);
+    const targetSet = setsCopy[key];
+
     if (targetSet) {
       setsCopy[setsCopy.indexOf(targetSet)].rollData[die] += 1;
       this.setState({diceSets: setsCopy});
@@ -90,7 +94,8 @@ class App extends Component {
 
   dropDie(key, die) {
       const setsCopy = this.state.diceSets.slice();
-      const targetSet = this.getSet(setsCopy, key);
+      const targetSet = setsCopy[key];
+
       if (targetSet) {
         const rollData = setsCopy[setsCopy.indexOf(targetSet)].rollData;
         setsCopy[setsCopy.indexOf(targetSet)].rollData[die] = rollData[die] > 0 ? rollData[die] - 1 : 0;
@@ -108,18 +113,19 @@ class App extends Component {
         <header>
           <div className="content-container">
             <button onClick={ () => this.addSet() }>Add a Set</button>
+            <button onClick={ () => this.rollAll(this.state.diceSets) }>Roll All</button>
           </div>
         </header>
         <div className="sets-container content-container">
-          { this.state.diceSets.map((set) =>
+          { this.state.diceSets.map((set, index) =>
             <DiceSet
-              key={ set.key }
+              key={ index }
               rollData={ set.rollData }
               result={ set.currentResult }
-              drop={ () => this.dropSet(set.key) }
-              roll={ () => this.roll(set.key) }
-              addDie={ (die) => this.addDie(set.key, die) }
-              dropDie={ (die) => this.dropDie(set.key, die) }
+              drop={ () => this.dropSet(index) }
+              roll={ () => this.roll(index) }
+              addDie={ (die) => this.addDie(index, die) }
+              dropDie={ (die) => this.dropDie(index, die) }
             />
           )}
         </div>
