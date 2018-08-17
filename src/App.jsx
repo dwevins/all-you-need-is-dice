@@ -133,8 +133,8 @@ class App extends Component {
       queryString += setDataString;
     })
 
-    if (shouldUpdateQuery && window.history.pushState) {
-        var newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${queryString}`;
+    if (window.history.pushState) {
+        var newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${shouldUpdateQuery ? queryString: ''}`;
         window.history.pushState({path:newurl},'',newurl);
     }
   }
