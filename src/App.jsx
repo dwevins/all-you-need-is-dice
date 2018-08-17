@@ -75,9 +75,9 @@ class App extends Component {
 
   rollAll(sets) {
     let setsCopy = sets.slice();
-    for (let i = 0; i < sets.length; i++) {
-      setsCopy[i] = this.rollSet(sets[i]);
-    }
+    sets.map((set, index) => {
+      setsCopy[index] = this.rollSet(set);
+    })
 
     this.setState({diceSets: setsCopy});
   }
@@ -103,11 +103,40 @@ class App extends Component {
       }
   }
 
+  generateSave(sets) {
+    const rollData = sets.map((set) => set.rollData);
+    let shouldUpdateQuery = false;
+    let queryString = '?sets';
+
+    rollData.map((set, index) => {
+      let setDataString = ''
+
+      Object.keys(set).map((die) => {
+        if (set[die] === 0) return false;
+
+        shouldUpdateQuery = true;
+        const dieHex = parseInt(die, 10).toString(16).padStart(2, '0');
+        const countHex = set[die].toString(16).padStart(2, '0');
+        setDataString += `${dieHex}${countHex}`;
+      })
+
+      queryString += index > 0 && setDataString.length ? `s` : '';
+      queryString += setDataString;
+    })
+
+    if (shouldUpdateQuery && window.history.pushState) {
+        var newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${queryString}`;
+        window.history.pushState({path:newurl},'',newurl);
+    }
+  }
+
   componentDidMount() {
     this.addSet();
   }
 
   render() {
+    this.generateSave(this.state.diceSets);
+
     return (
       <div className="App">
         <header>
