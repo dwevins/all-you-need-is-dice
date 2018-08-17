@@ -50,7 +50,7 @@ class App extends Component {
     for (let i = 0; i < keys.length; i++) {
       const curDie = keys[i];
       const numRolls = set.rollData[curDie];
-      const mod = Math.floor(100 / curDie);
+      const mod = Math.ceil(100 / curDie);
 
       for (let j = 1; j <= numRolls; j++) {
         let roll = Math.ceil((Math.random() * 100) / mod);
