@@ -2,8 +2,11 @@
   box-sizing: border-box;
 }
 
+button {
+  font-size: 1rem;
+}
+
 .App {
-  background-color: teal;
   width: 100vw;
   height: 100vh;
   padding: 0 2vh;
@@ -13,7 +16,6 @@
   position: relative;
   width: 100%;
   padding: 1rem;
-  background-color: seagreen;
 }
 
 .dice-set:not(:last-child) {
@@ -24,6 +26,12 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.dice-set .dice-menu .count {
+  width: 100%;
+  margin-bottom: 0.5rem;
 }
 
 .dice-set .drop-btn {
@@ -34,6 +42,17 @@
 }
 
 .dice-menu .die-container {
-  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 33%;
+  text-align: center;
+}
+
+.dice-menu .die-container .die-control {
+  font-size: 1.2rem;
+}
+
+.dice-set .results {
   text-align: center;
 }
