@@ -8,14 +8,14 @@ export default function DicePanel(props) {
                 {Object.keys(props.rollData).map((die, key) =>
                     <div className="die-container" key={key}>
                         <p className="count">d{ die } x {props.rollData[die]}</p>
-                        <button className="die-control" onClick={ () => props.addDie(die) }>+</button>
-                        <button className="die-control" onClick={ () => props.dropDie(die) }>-</button>
+                        <button className="die-control" onClick={ () => props.addDie(die) }><span>+</span></button>
+                        <button className="die-control" onClick={ () => props.dropDie(die) }><span>-</span></button>
                     </div>
                 )}
             </div>
             <section className="results">
                 <h2 className="result">{ props.result }</h2>
-                <button onClick={ () => props.roll() }>Roll</button>
+                <button onClick={ () => props.roll() }><span>Roll</span></button>
             </section>
         </div>
     )

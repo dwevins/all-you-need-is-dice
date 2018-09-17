@@ -178,13 +178,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header>
-          <div className="content-container">
-            <button onClick={ () => this.addEmptySet() }>Add a Set</button>
-            <button onClick={ () => this.rollAll(this.state.diceSets) }>Roll All</button>
+        <header className="page-header">
+          <h1 className="title">All You Need Is Dice</h1>
+          <div className="set-controls">
+            <button onClick={ () => this.addEmptySet() }><span>Add a Set</span></button>
+            <button onClick={ () => this.rollAll(this.state.diceSets) }><span>Roll All</span></button>
           </div>
         </header>
-        <div className="sets-container content-container">
+        <div className="sets-container">
           { this.state.diceSets.map((set, index) =>
             <DiceSet
               key={ index }
