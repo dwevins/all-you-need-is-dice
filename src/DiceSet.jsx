@@ -7,9 +7,9 @@ export default function DicePanel(props) {
                 <div className="dice-menu">
                     {Object.keys(props.rollData).map((die, key) =>
                         <div className="die-container" key={key}>
+                            <p className="count">d{ die } x {props.rollData[die]}</p>
                             <button onClick={ () => props.addDie(die) }>Add</button>
                             <button onClick={ () => props.dropDie(die) }>Drop</button>
-                            <p className="count">d{ die } x {props.rollData[die]}</p>
                         </div>
                     )}
                 </div>
