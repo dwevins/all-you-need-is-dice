@@ -14,7 +14,7 @@ export default function DicePanel(props) {
                     )}
                 </div>
                 <button onClick={ () => props.roll() }>Roll</button>
-                <button onClick={ () => props.drop() }>Drop Set</button>
+                <button className="drop-btn" onClick={ () => props.drop() }>X</button>
             </div>
             <section className="results">
                 <h3 className="result">{ props.result }</h3>

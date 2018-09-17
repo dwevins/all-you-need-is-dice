@@ -10,14 +10,27 @@
 }
 
 .dice-set {
+  position: relative;
   width: 100%;
+  padding: 1rem;
   background-color: seagreen;
+}
+
+.dice-set:not(:last-child) {
+  margin-bottom: 1rem;
 }
 
 .dice-set .dice-menu {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.dice-set .drop-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1rem;
 }
 
 .dice-menu .die-container {
