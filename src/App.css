@@ -29,6 +29,12 @@ button:focus {
   padding: 3rem 5vw 5rem;
 }
 
+#ui-mode:after {
+  opacity: 0;
+  user-select: none;
+  content: 'mobile';
+}
+
 .page-header {
   margin-bottom: 2rem;
 }
@@ -106,6 +112,10 @@ button:focus {
 }
 
 @media screen and (min-width: 54rem) {
+  #ui-mode:after {
+    content: 'desktop';
+  }
+
   .sets-container {
     max-width: 732px;
     margin: 0 auto;

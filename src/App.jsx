@@ -179,6 +179,7 @@ class App extends Component {
 
     return (
       <div className="App">
+        <span id="ui-mode"></span>
         <header className="page-header">
           <h1 className="title">All You Need Is Dice</h1>
           <div className="set-controls">
