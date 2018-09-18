@@ -22,12 +22,13 @@ class App extends Component {
         10: 0,
         12: 0,
         20: 0,
+        100: 0
       },
 
       currentResult: 0
     }
 
-    Object.keys(rollSeed).map((die) => {
+    Object.keys(rollSeed).forEach((die) => {
       newSet.rollData[die] = rollSeed[die];
     })
 
@@ -84,7 +85,7 @@ class App extends Component {
 
   rollAll(sets) {
     let setsCopy = sets.slice();
-    sets.map((set, index) => {
+    sets.forEach((set, index) => {
       setsCopy[index] = this.rollSet(set);
     })
 
@@ -117,10 +118,10 @@ class App extends Component {
     let shouldUpdateQuery = false;
     let queryString = '?sets=';
 
-    rollData.map((set, index) => {
+    rollData.forEach((set, index) => {
       let setDataString = ''
 
-      Object.keys(set).map((die) => {
+      Object.keys(set).forEach((die) => {
         if (set[die] === 0) return false;
 
         shouldUpdateQuery = true;
@@ -130,7 +131,7 @@ class App extends Component {
       })
 
       queryString += index > 0 && setDataString.length ? `s` : '';
-      queryString += setDataString;
+      return queryString += setDataString;
     })
 
     if (window.history.pushState) {
@@ -159,7 +160,7 @@ class App extends Component {
           values.push(set.slice(i, i + 2));
         }
 
-        dice.map((die, index) => {
+        dice.forEach((die, index) => {
           setData[`${parseInt(die, 16)}`] = parseInt(values[index], 16);
         })
 
@@ -177,13 +178,14 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header>
-          <div className="content-container">
-            <button onClick={ () => this.addEmptySet() }>Add a Set</button>
-            <button onClick={ () => this.rollAll(this.state.diceSets) }>Roll All</button>
+        <header className="page-header">
+          <h1 className="title">All You Need Is Dice</h1>
+          <div className="set-controls">
+            <button onClick={ () => this.addEmptySet() }><span>Add a Set</span></button>
+            <button onClick={ () => this.rollAll(this.state.diceSets) }><span>Roll All</span></button>
           </div>
         </header>
-        <div className="sets-container content-container">
+        <div className="sets-container">
           { this.state.diceSets.map((set, index) =>
             <DiceSet
               key={ index }

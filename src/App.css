@@ -1,54 +1,146 @@
-.App {
+html, body {
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  padding: 0.5rem;
+  background: #eee;
+  border: 0;
+  border-radius: 0.1rem;
+  font-size: 1rem;
   text-align: center;
 }
 
-.content-container {
-  width: 100%;
-  max-width: 64rem;
+button:focus {
+  outline: none;
+}
+
+.App {
+  width: 100vw;
+  max-width: 80rem;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 1rem 6rem;
+  padding: 3rem 5vw 5rem;
 }
 
-header {
+.page-header {
   margin-bottom: 2rem;
-  border-bottom: 1px solid #000;
 }
 
-header > * {
-  display: inline-block;
-  text-align: left;
+.title {
+  margin-top: 0;
+  text-align: center;
 }
 
 .sets-container {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-.dice-set:not(:nth-child(4n+4)) {
+.set-controls {
+  text-align: center
+}
+
+.set-controls > *:first-child {
   margin-right: 1rem;
 }
 
 .dice-set {
-  display: inline-block;
-  margin-bottom: 1.5rem;
+  position: relative;
+  width: 100%;
   padding: 1rem;
-  max-width: 20rem;
-  flex-basis: 20%;
-  border: 1px solid #000;
+  border: 2px solid rgb(99, 99, 99);
+  border-radius: 1rem;
+  box-shadow: 0rem 0.1rem 0.5rem 0.2rem rgba(0, 0, 0, 0.2)
 }
 
-.dice-set .controls .dice-menu {
-  margin-bottom: 1rem;
+.dice-set:not(:last-child) {
+  margin-bottom: 2rem;
 }
 
-.dice-set .controls .dice-menu > * {
-  display: inline-block;
-  width: 50%;
-  min-width: 6rem;
+.dice-set .dice-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 0.5rem;
 }
 
-.dice-set .results .result {
-  font-size: 3rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0;
+.dice-set .dice-menu .count {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.dice-set .drop-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1rem;
+}
+
+.dice-menu .die-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 33%;
+  text-align: center;
+}
+
+.dice-menu .die-container .die-control {
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.4rem;
+}
+.dice-menu .die-container .die-control span {
+  font-size: 1.2rem;
+  line-height: 1rem;
+}
+
+.dice-set .results {
+  text-align: center;
+}
+
+@media screen and (min-width: 54rem) {
+  .sets-container {
+    max-width: 732px;
+    margin: 0 auto;
+  }
+
+  .dice-set {
+    width: 350px;
+    margin-bottom: 2rem;
+  }
+
+  .dice-set:not(:nth-child(2n)) {
+    margin-right: 2rem;
+  }
+}
+
+/* desktop */
+@media screen and (min-width: 78rem) {
+  .App {
+    padding: 3rem 4rem 5rem;
+  }
+  .sets-container {
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+
+  .dice-set:not(:nth-child(2n)) {
+    margin-right: unset;
+  }
+
+  .dice-set:not(:nth-child(3n)) {
+    margin-right: 2rem;
+  }
+
+  .dice-set {
+    width: 350px;
+    margin-bottom: 2rem;
+  }
 }
