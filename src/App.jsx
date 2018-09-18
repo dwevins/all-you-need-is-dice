@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DiceSet from './DiceSet';
+import Menu from './Menu';
 import './App.css';
 
 class App extends Component {
@@ -181,8 +182,10 @@ class App extends Component {
         <header className="page-header">
           <h1 className="title">All You Need Is Dice</h1>
           <div className="set-controls">
-            <button onClick={ () => this.addEmptySet() }><span>Add a Set</span></button>
-            <button onClick={ () => this.rollAll(this.state.diceSets) }><span>Roll All</span></button>
+            <Menu
+              addEmptySet={() => this.addEmptySet()}
+              rollAll={() => this.rollAll(this.state.diceSets)}
+            />
           </div>
         </header>
         <div className="sets-container">
