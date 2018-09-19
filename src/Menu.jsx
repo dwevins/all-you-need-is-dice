@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { registerCallback } from './screenResizeHelpers';
+import { registerCallback, getScreenMode } from './screenResizeHelpers';
 
 class Menu extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class Menu extends Component {
     componentDidMount() {
         registerCallback('mobile', () => this.setState({navMode: 'mobile'}))
         registerCallback('desktop', () => this.setState({navMode: 'desktop'}))
+        this.setState({navMode: getScreenMode()});
     }
 
 
