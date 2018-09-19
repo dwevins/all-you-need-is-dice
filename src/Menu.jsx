@@ -5,8 +5,13 @@ class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            navMode: 'desktop'
+            navMode: 'desktop',
+            mobileMenuOpen: false
         }
+    }
+
+    toggleMobileMenu() {
+        this.setState({mobileMenuOpen: !this.state.mobileMenuOpen});
     }
 
     componentDidMount() {
@@ -14,7 +19,6 @@ class Menu extends Component {
         registerCallback('desktop', () => this.setState({navMode: 'desktop'}))
         this.setState({navMode: getScreenMode()});
     }
-
 
     render() {
         return (
@@ -27,10 +31,13 @@ class Menu extends Component {
 
             )}
             {this.state.navMode === 'mobile' &&
-                <Fragment>
-                    <button onClick={ () => this.props.addEmptySet() }><span>MOBILE Add a Set</span></button>
-                    <button onClick={ () => this.props.rollAll() }><span>MOBILE Roll All</span></button>
-                </Fragment>
+                <div className={`mobile-nav ${this.state.mobileMenuOpen ? 'menu-open' : ''}`}>
+                    <button className="roll-all-btn" onClick={ () => this.props.rollAll() }><span>R</span></button>
+                    <button className="add-set-btn" onClick={ () => this.props.addEmptySet() }><span>+</span></button>
+                    <button className="menu-btn" onClick={ () => this.toggleMobileMenu() }>
+                        <span>{ this.state.mobileMenuOpen ? 'X' : 'M'}</span>
+                    </button>
+                </div>
             }
             </div>
         )

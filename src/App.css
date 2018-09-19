@@ -111,6 +111,47 @@ button:focus {
   text-align: center;
 }
 
+.mobile-nav {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+}
+
+.mobile-nav button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mobile-nav button span {
+  text-align: center;
+}
+
+.mobile-nav button:not(.menu-btn) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.mobile-nav button.menu-btn {
+  z-index: 1;
+}
+
+.mobile-nav.menu-open button.roll-all-btn {
+  transform: translateX(3.5rem);
+}
+
+.mobile-nav.menu-open button.add-set-btn {
+  transform: translateY(3.5rem);
+}
+
 @media screen and (min-width: 54rem) {
   #ui-mode:after {
     content: 'desktop';
